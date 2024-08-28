@@ -15,3 +15,9 @@ class ParentIn(BaseModel):
     name: str
     phone_number: str
     verification_code: str
+
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+    username: str

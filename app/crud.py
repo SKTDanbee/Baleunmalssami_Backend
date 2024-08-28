@@ -18,3 +18,12 @@ def create_child(db: Session, child: Child):
     db.commit()
     db.refresh(child)
     return child
+
+def authenticate_user(db: Session, username: str, password: str):
+    user = db.query(Child).filter(Child.id == username).first()
+    if user and user.password == password:
+        return user
+    user = db.query(Parent).filter(Parent.id == username).first()
+    if user and user.password == password:
+        return user
+    return None
