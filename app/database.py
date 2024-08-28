@@ -13,11 +13,3 @@ engine = create_engine(DB_url, pool_recycle= 500, echo=True)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
-
- # db 세션
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
