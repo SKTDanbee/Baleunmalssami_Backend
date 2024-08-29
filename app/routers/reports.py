@@ -1,7 +1,9 @@
+from datetime import datetime
 from typing import List
 from sqlalchemy.orm import Session
 from fastapi import APIRouter, Depends, HTTPException
 
+from app import models
 from app.crud import get_reports
 from app.dependencies import get_db, get_current_user
 from app.models import Child, Report, Parent
@@ -9,6 +11,12 @@ from app.schemas import ReportResponse
 
 router = APIRouter()
 
+@router.post("/create_txt/")
+def create_txt(report_text: str, child_id: str, db: Session = Depends(get_db)):
+    db_txt = models.Txt(date=datetime.utcnow(), report_text=report_text, child_id=child_id)
+    db.add(db_txt)
+    db.commit()
+    return db_txt
 
 @router.get("/reports/", response_model=List[ReportResponse])
 async def read_all_reports(db: Session = Depends(get_db), current_user: Child = Depends(get_current_user)):
