@@ -1,3 +1,4 @@
+from datetime import date
 from typing import Optional
 
 from pydantic import BaseModel
@@ -16,8 +17,17 @@ class ParentIn(BaseModel):
     phone_number: str
     verification_code: str
 
-
 class Token(BaseModel):
     access_token: str
     token_type: str
     username: str
+
+class ReportResponse(BaseModel):
+    report_date: date
+    child_id: str
+    report: Optional[str]
+    abuse_count: Optional[int]
+    report_type: str
+
+    class Config:
+        orm_mode = True

@@ -27,3 +27,6 @@ def authenticate_user(db: Session, username: str, password: str):
     if user and user.password == password:
         return user
     return None
+
+def get_reports(db: Session):
+    return db.query(Report).order_by(Report.report_date.desc()).all()
